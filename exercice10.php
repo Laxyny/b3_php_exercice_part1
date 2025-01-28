@@ -5,68 +5,57 @@
  * Refactoriser le code ci-dessous en créant une classe Statistics
  */
 
-$numbers = [10, 5, 8, 20, 3, 15];
-
-/**
- * Calcule la somme d'un tableau de nombres
- */
-function getSum(array $numbers): float
+class Statistics
 {
-    $sum = 0;
-    foreach ($numbers as $number) {
-        $sum += $number;
-    }
-    return $sum;
-}
+    private array $numbers;
 
-/**
- * Calcule la moyenne d'un tableau de nombres
- */
-function getAverage(array $numbers): float
-{
-    if (count($numbers) === 0) {
-        return 0;
+    public function __construct(array $numbers)
+    {
+        $this->numbers = $numbers;
     }
-    return getSum($numbers) / count($numbers);
-}
 
-/**
- * Trouve la valeur minimale d'un tableau de nombres
- */
-function getMin(array $numbers): float
-{
-    if (count($numbers) === 0) {
-        return 0;
+    /**
+     * Calcule la somme d'un tableau de nombres
+     */
+    public function getSum(): float
+    {
+        return array_sum($this->numbers);
     }
-    $min = $numbers[0];
-    foreach ($numbers as $number) {
-        if ($number < $min) {
-            $min = $number;
+
+    /**
+     * Calcule la moyenne d'un tableau de nombres
+     */
+    public function getAverage(): float
+    {
+        if (count($this->numbers) === 0) {
+            return 0;
         }
+        return $this->getSum() / count($this->numbers);
     }
-    return $min;
-}
 
-/**
- * Trouve la valeur maximale d'un tableau de nombres
- */
-function getMax(array $numbers): float
-{
-    if (count($numbers) === 0) {
-        return 0;
+    /**
+     * Trouve la valeur minimale d'un tableau de nombres
+     */
+    public function getMin(): float
+    {
+        return count($this->numbers) > 0 ? min($this->numbers) : 0;
     }
-    $max = $numbers[0];
-    foreach ($numbers as $number) {
-        if ($number > $max) {
-            $max = $number;
-        }
+
+    /**
+     * Trouve la valeur maximale d'un tableau de nombres
+     */
+    public function getMax(): float
+    {
+        return count($this->numbers) > 0 ? max($this->numbers) : 0;
     }
-    return $max;
 }
 
 // Exemple d’utilisation
+$numbers = [10, 5, 8, 20, 3, 15];
+$stats = new Statistics($numbers);
+
 echo "Tableau de nombres : " . implode(", ", $numbers) . "<br>";
-echo "Somme : " . getSum($numbers) . "<br>";
-echo "Moyenne : " . getAverage($numbers) . "<br>";
-echo "Valeur minimale : " . getMin($numbers) . "<br>";
-echo "Valeur maximale : " . getMax($numbers) . "<br>";
+echo "Somme : " . $stats->getSum() . "<br>";
+echo "Moyenne : " . $stats->getAverage() . "<br>";
+echo "Valeur minimale : " . $stats->getMin() . "<br>";
+echo "Valeur maximale : " . $stats->getMax() . "<br>";
